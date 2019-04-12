@@ -1,6 +1,6 @@
 ### fastadmin用户聊天系统插件
 
-![聊天截图](https://github.com/gittbin/fastadmin_imchat/tree/master/screenshot/pic1.png)
+![聊天截图](screenshot/pic1.png)
 
 本插件基于workman+websocket实现的简易聊天系统，适用于前台用户的聊天，目前已经实现群聊、单聊、聊天记录、表情发送、图片以及文件发送、不过文件发送未做鉴权。bat脚本仅适用于开发，window上面可能会出现各种问题。
 
