@@ -1,0 +1,209 @@
+<link rel="stylesheet" type="text/css" href="/assets/addons/imchat/css/chat.css">
+<link rel="stylesheet" href="/assets/addons/imchat/css/iconfont.css">
+<link rel="stylesheet" href="/assets/addons/imchat/css/perfect-scrollbar.css">
+<script src="/assets/addons/imchat/js/perfect-scrollbar.min.js"></script>
+<script src="/assets/addons/imchat/js/vue.min.js"></script>
+<script src="/assets/addons/imchat/js/axios.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script> -->
+<div id="tichat_vue_app">
+  <div class="tichat-small-show" id="tichat_small_show" title="点击展开聊天">
+    <div class="ti-logo" :class="{'ti-logo-msg': isHasUnreadMsg}"></div>
+    <div>imchat</div>
+  </div>
+  <div class="tichat-master" id="tichat_el">
+    <div class="tichat-preview-img" @click="hide_preview">
+      <img src="">
+    </div>
+    <div class="tichat-main">
+      <div class="tichat-main-inner">
+        <!-- left side -->
+        <div class="tichat-side">
+          <!-- header and menu -->
+          <div class="tichat-sd-hd">
+            <div class="tichat-sd-header">
+              <div class="tichat-user-avatar">
+                <img :src="userInfo.avatar">
+              </div>
+              <div class="tichat-user-me-info">
+                <div class="tichat-user-name">{{userInfo.nickname?userInfo.nickname:userInfo.username}}</div>
+                <div class="tichat-menu-tag">
+                  <span class="iconfont icon-2501caidan"></span>
+                </div>
+              </div>
+            </div>
+            <div class="tichat-search">
+              <span class="iconfont icon-search"></span>
+              <input type="text" placeholder="搜索">
+            </div>
+            <!-- 菜单 -->
+            <ul class="tichat-sd-tab">
+              <li @click="chat_control.tab = 'recChat'"><span class="iconfont icon-chat" :class="{'tichat-current': chat_control.tab==='recChat'}"></span></li>
+              <li @click="chat_control.tab = 'groupChat'"><span class="iconfont icon-group" :class="{'tichat-current': chat_control.tab==='groupChat'}"></span></li>
+              <li @click="chat_control.tab = 'userChat'" ><span class="iconfont icon-person" :class="{'tichat-current': chat_control.tab==='userChat'}"></span></li>
+            </ul>
+          </div>
+          <!-- header and menu end -->
+          <!-- side list  -->
+          <!-- 最近聊天 -->
+          <ul class="tichat-sd-user-list" id="tichat_rec_chat" :class="{'tichat-tab-hide': chat_control.tab!=='recChat'}">
+            <!-- 最近聊天的数据会改变  所有不能直接判断 -->
+            <li class="tichat-sd-user-li" v-for="(x, y) in recChat" :key="y" :class="{'tichat-active': chat_control && x.id==chat_control.recChat.id && x.type==chat_control.recChat.type }" @click="select_chat_object(x)" :title="x.username ? x.username : x.name">
+              <div class="tichat-user-avatar tichat-sd-user-list-avatar">
+                <img :src="x.avatar">
+                <span class="tichat-msg-show" v-if="rec_reset && x.unread_count>0">{{x.unread_count <= 99 ? x.unread_count : 99 }}</span>
+              </div>
+              <div class="tichat-li-time">{{show_format_datetime(x.timestamp)}}</div>
+              <div class="tichat-user-info">
+                <div class="nikename">{{x.nickname ? x.nickname : x.username ? x.username : x.name}}</div>
+                <div class="msg" v-truetext="x.last_msg"></div>
+              </div>
+            </li>
+          </ul>
+          <!-- 群组 -->
+          <ul class="tichat-sd-contact-list" id="tichat_group_chat" :class="{'tichat-tab-hide': chat_control.tab!=='groupChat'}">
+            <template v-for="x in groupChat">
+              <li class="tichat-contact-item" :class="{'tichat-active': x==chat_control.groupChat}"  @click="select_contact_object(x, 'group')"  :title="x.name">
+                <div class="tichat-contact-avatar">
+                  <img :src="x.avatar">
+                </div>
+                <div class="nikename">{{x.name}}</div>
+              </li>
+            </template>
+          </ul>
+          <!-- 人员 -->
+          <ul class="tichat-sd-contact-list" id="tichat_user_chat" :class="{'tichat-tab-hide': chat_control.tab!=='userChat'}">
+            <template v-for="x in userChat">
+              <!-- <li class="tichat-letter">A</li> -->
+              <li class="tichat-contact-item" :class="{'tichat-active': x==chat_control.userChat}" @click="select_contact_object(x)"  :title="x.username">
+                <div class="tichat-contact-avatar">
+                  <img :src="x.avatar">
+                </div>
+                <div class="nikename">
+                  {{x.nickname}}
+                  <span style="color: #999;">({{x.username}})</span>
+                </div>
+              </li>
+            </template>
+          </ul>
+        </div>
+
+        <!-- right -->
+        <div class="tichat-chat-box">
+          <div class="tichat-chat-area">
+            <div class="tichat-chat-area-close" id="tichat_chat_area_close"><span>×</span></div>
+
+            <!-- empty -->
+            <div v-show="chat_control.tab=='recChat' && !chat_control.recChat.id">
+              <div class="tichat-chat-area-header">
+                <span></span>
+              </div>
+              <div class="tichat-chat-empty">
+                未选择聊天
+              </div>
+            </div>
+
+            <!-- chat box -->
+            <template v-if="chat_control.tab=='recChat' && chat_control.recChat.id">
+              <div class="tichat-chat-area-header">
+                <span>{{chat_control.recChat.nickname ? chat_control.recChat.nickname : chat_control.recChat.name}}</span>
+              </div>
+              <div class="tichat-chat-history" id="tichat_chat_record">
+                <div class="tichat-chat-history-more" @click="getMoreRecord" title="查看更多历史聊天记录" v-if="is_has_more_record()">更多</div>
+                <div class="tichat-chat-history-empty" v-if="!current_chat_record || current_chat_record.length ==0">暂时没有新消息</div>
+
+                <div v-for="(x,y) in current_chat_record">
+                  <div class="tichat-show-datetime" v-text="is_show_date(y)"></div>
+                  <!-- 左边 不是本人 -->
+                  <div class="tichat-msg-item tichat-msg-item-left tichat-clearfix" v-if="x.from_uid !=userInfo.id">
+                    <div class="tichat-nt-item">
+                      <img :src="x.userInfo.nickname.avatar" class="tichat-image-avatar">
+                      <div>
+                        <!-- 群组 or 个人 面板唯一区别 -->
+                        <div class="tichat-group-show-name" v-if="chat_control.recChat.type=='group'" :title="x.userInfo.username">{{x.userInfo.nickname}}</div>
+                        <div class="tichat-record-content" v-html="x.content">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 右边 本人 -->
+                  <div class="tichat-msg-item tichat-msg-item-right tichat-clearfix" v-if="x.from_uid ==userInfo.id">
+                    <div class="tichat-nt-item">
+                      <div>
+                        <div class="tichat-record-content" v-html="x.content">
+                        </div>
+                      </div>
+                      <img :src="x.userInfo.nickname.avatar" class="tichat-image-avatar">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- input -->
+              <div class="tichat-chat-ft">
+                <ul class="tichat-chat-tool-tab">
+                  <li>
+                    <span class="iconfont icon-face" title="点击发送表情" @click="show_emoji=!show_emoji"></span>
+                    <div class="imchat-emoji-box" v-if="show_emoji">
+                      <i class="em" v-for="(v, k) in emoji" :class="v" :key="v" @click="insert_emoji"></i>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="iconfont icon-image"></span>
+                    <input type="file" accept="image/*" @change="upload" class="tichat-opacity" title="点击发送图片">
+                  </li>
+                  <li>
+                    <span class="iconfont icon-3801wenjian"></span>
+                    <input type="file" @change="upload" class="tichat-opacity" title="点击发送文件">
+                  </li>
+                </ul>
+                <div class="tichat-chat-content">
+                  <div class="tichat-chat-input" contenteditable="true" ref="input_content" @keyup.ctrl.enter="keyup_ctrl_enter" @focus="input_focus"></div>
+                <div class="tichat-chat-action">
+                  <span class="tichat-chat-action-notice">按ctrl+enter发送</span>
+                  <a href="javascript:void(0)" class="tichat-chat-action-send-btn" @click="keyup_ctrl_enter">发送</a>
+                </div>
+            </template>
+            
+            <!-- 群组详情 -->
+            <div v-show="chat_control.tab=='groupChat'">
+              <div class="tichat-chat-area-header">
+                <span>详细信息</span>
+              </div>
+              <div class="tichat-chat-friend-desc"  v-if="chat_control.groupChat.id >=0">
+                <img :src="chat_control.groupChat.avatar"  class="tichat-chat-friend-avatar">
+                <h4 class="tichat-chat-friend-nickname">
+                  {{chat_control.groupChat.name}} 
+                </h4>
+                <div class="tichat-chat-friend-signature">
+                {{ chat_control.groupChat.intro ? chat_control.groupChat.intro : '这个人很懒，什么也没说...'}}
+                </div>
+                <span class="tichat-tosend-btn" @click="select_chat_object(chat_control.groupChat, true)">发消息</span>
+              </div>
+            </div>
+
+            <!-- 人员详情 -->
+            <div v-show="chat_control.tab=='userChat'">
+              <div class="tichat-chat-area-header">
+                <span>详细信息</span>
+              </div>
+              <div class="tichat-chat-friend-desc"  v-if="chat_control.userChat.id">
+                <img :src="chat_control.userChat.avatar" class="tichat-chat-friend-avatar">
+                <h4 class="tichat-chat-friend-nickname">
+                  {{chat_control.userChat.nickname}} 
+                </h4>
+                <span>{{chat_control.userChat.username}}</span>
+                <div class="tichat-chat-friend-signature">
+                {{chat_control.userChat.bio ? chat_control.userChat.bio : '这个人很懒，什么也没说...'}}
+                </div>
+                <span class="tichat-tosend-btn" @click="select_chat_object(chat_control.userChat, true)">发消息</span>
+              </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/assets/addons/imchat/js/chat.js"></script>
+<link href="/assets/addons/imchat/css/emoji.css" rel="stylesheet">

@@ -1,0 +1,630 @@
+.tichat-small-show {
+  position: fixed;
+  z-index: 9998;
+  right: 1px;
+  bottom: 0;
+  width: 120px;
+  height: 55px;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 50px rgba(0,0,0,.4);
+}
+.tichat-small-show .ti-logo {
+  background-image: url(data:image/png;base64,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);
+  width: 40px;
+  height: 40px;
+  background-size: 100%;
+  margin-right: 5px;
+}
+.tichat-small-show .ti-logo-msg {
+  animation: newMsg 1s infinite ease-in-out; 
+}
+@keyframes newMsg
+{
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.tichat-master {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+.tichat-master * {
+    box-sizing: initial;
+ }
+.tichat-main {
+  height: 720px;
+  padding-top: 100px;
+  transition: padding .3s linear;
+  -webkit-transition: padding .3s linear;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.tichat-main-inner {
+  width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+}
+.tichat-side {
+  width: 28%;
+  height: 100%;
+  background: #2e3238;
+  position: relative;
+}
+.tichat-chat-box {
+  height: 100%;
+  width: 72%;
+  background-color: #eee;
+  overflow: hidden;
+  position: relative;
+}
+.tichat-sd-hd {
+  border-bottom: 1px solid #24272c;
+}
+.tichat-sd-header {
+  padding: 18px;
+  box-sizing: border-box;
+}
+.tichat-user-avatar {
+  float: left;
+}
+.tichat-user-avatar img{
+  width: 40px;
+  height: 40px;
+  background-color: #aaa;
+  border-radius: 3px;
+}
+.tichat-user-me-info {
+  margin-left: 50px;
+  height: 40px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-align: center;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  font-weight: 400;
+  font-size: 13px;
+  color: #fff;
+  line-height: 20px;
+}
+.tichat-user-name {
+  font-size: 18px;
+}
+.tichat-menu-tag {
+  cursor: pointer;
+}
+.tichat-menu-tag .iconfont {
+  font-size: 18px;
+}
+.tichat-search {
+  position: relative;
+  padding: 12px 18px;
+  padding-top: 0;
+}
+.tichat-search input {
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  border: 0;
+  border-radius: 2px;
+  background-color: #26292e;
+  color: #fff;
+  padding-left: 30px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+.tichat-search .iconfont {
+  position: absolute;
+  color: #ddd;
+  font-size: 20px;
+  line-height: 34px;
+  left: 22px;
+}
+.tichat-sd-tab {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  color: #fff;
+  padding-bottom: 5px;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 12px 18px;
+  padding-top: 0;
+  padding-bottom: 5px;
+}
+.tichat-sd-tab li {
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+.tichat-sd-tab li::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 0;
+  height: 20px;
+  border-right: 1px solid #24272c;
+}
+.tichat-sd-tab .iconfont {
+  font-size: 25px;
+  line-height: 30px;
+}
+.tichat-sd-tab li:last-child::after {
+  visibility: hidden;
+}
+.tichat-sd-tab .tichat-current {
+  color: #3caf36;
+}
+.tichat-sd-user-list,
+.tichat-sd-contact-list {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  top: 156px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+.tichat-sd-user-li {
+  height: 40px;
+  padding: 12px 10px 12px 18px;
+  cursor: pointer;
+  overflow: hidden;
+  border-bottom: 1px solid #292c33;
+}
+.tichat-sd-user-li.tichat-active {
+  background: #3a3f45;
+}
+.tichat-sd-user-li.tichat-active .msg,
+.tichat-sd-user-li.tichat-active .tichat-li-time {
+  color: #fff;
+}
+.tichat-sd-user-list-avatar {
+  position: relative;
+}
+.tichat-sd-user-list-avatar .tichat-msg-show {
+  content: '';
+  position: absolute;
+  background-color: red;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  top: -6px;
+  right: -6px;
+}
+.tichat-user-info {
+  margin-left: 50px;
+  width: 130px;
+  height: 40px;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+.tichat-user-info .nikename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  font-weight: 400;
+  font-size: 13px;
+  color: #fff;
+  line-height: 20px;
+  height: 20px;
+  width: 100%;
+}
+.tichat-user-info .msg {
+  color: #989898;
+  font-size: 13px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  height: 20px;
+}
+.tichat-li-time {
+  float: right;
+  color: #6b6f7c;
+  font-size: 13px;
+  text-align: right;
+}
+.tichat-tab-hide {
+  visibility: hidden;
+  width: 0;
+}
+
+.tichat-sd-contact-list {
+  background-color: #292d32;
+}
+.tichat-contact-item {
+  height: 30px;
+  padding: 12px 18px;
+  cursor: pointer;
+  overflow: hidden;
+  border-bottom: 1px solid #292c33;
+  display: flex;
+  align-items: center;
+}
+.tichat-contact-avatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  background-color: #aaa;
+}
+.tichat-letter {
+  padding: 2px 18px;
+  color: #92969f;
+  font-size: 14px;
+}
+.tichat-contact-item {
+  background-color: #2e3238;
+}
+.tichat-contact-item .nikename {
+  margin-left: 10px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.tichat-contact-item.tichat-active {
+  background-color: #3b4047;
+}
+
+
+.tichat-chat-area {
+  height: 100%;
+  position: relative;
+}
+.tichat-chat-area-header {
+  padding: 10px 0;
+  margin: 0 19px;
+  border-bottom: 1px solid #d6d6d6;
+  background-color: #eee;
+  text-align: center;
+  z-index: 1024;
+}
+.tichat-chat-history-more {
+  color: #666;
+  font-size: 12px;
+  text-align: right;
+  cursor: pointer;
+  margin-top: -15px;
+}
+.tichat-chat-area-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  vertical-align:middle;
+  cursor: pointer;
+  font-size: 20px;
+  color: #444;
+  border-radius: 3px;
+}
+.tichat-chat-area-close:hover {
+  background-color: #bbb;
+  color: #fff;
+}
+.tichat-chat-area-close:hover span {
+  transform: rotate(180deg);  
+  -webkit-transform: rotate(180deg);  
+  -moz-transform: rotate(180deg);  
+  -o-transform: rotate(180deg);  
+  -ms-transform: rotate(180deg);  
+}
+.tichat-chat-area-close span {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: all 0.2s ease-in-out;  
+  -webkit-transition: all 0.2s ease-in-out;  
+  -moz-transition: all 0.2s ease-in-out;  
+  -o-transition: all 0.2s ease-in-out;
+}
+.tichat-chat-area-header  span {
+  font-weight: 400;
+  height: 25px;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 25px;
+  cursor: pointer;
+}
+.tichat-chat-friend-desc {
+  margin-top: 100px;
+  text-align: center;
+}
+.tichat-chat-friend-avatar {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-color: #aaa;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  margin-bottom: 22px;
+}
+.tichat-chat-friend-nickname {
+  font-weight: 400;
+  font-size: 24px;
+  display: inline-block;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.tichat-chat-friend-signature {
+  font-size: 14px;
+  color: #888;
+}
+.tichat-tosend-btn {
+  margin-top: 50px;
+  cursor: pointer;
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  color: #fff;
+  line-height: 40px;
+  background-color: #42ac3e;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+.tichat-chat-empty {
+  margin-top: 120px;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+}
+.tichat-chat-history {
+  position: absolute;
+  padding: 18px;
+  height: 490px;
+  box-sizing: border-box;
+  top: 50px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+}
+.tichat-chat-history-empty {
+  text-align: center;
+  padding: 50px;
+  font-size: 14px;
+  color: #bbb;
+}
+.tichat-chat-ft {
+  position: absolute;
+  height: 180px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #d6d6d6;
+  box-sizing: border-box;
+  padding-right: 18px;
+}
+.tichat-chat-tool-tab {
+  padding: 5px 17px;
+  display: flex;
+  margin: 0;
+  list-style: none;
+}
+.tichat-chat-tool-tab li {
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  margin-right: 10px;
+  text-align: center;
+  position: relative; 
+}
+.tichat-chat-tool-tab .tichat-opacity {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.tichat-chat-tool-tab li span {
+  cursor: pointer;
+  font-size: 22px;
+  color: #666;
+}
+.tichat-chat-content {
+  margin-left: 17px;
+}
+.tichat-chat-input {
+  word-break: break-all;
+  word-wrap: break-word;
+  width: 100%;
+  height: 80px;
+  outline: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 14px;
+  color: #333;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.tichat-chat-input:focus {
+  background: #fcfcfc;
+}
+.tichat-chat-action {
+  margin-top: 10px;
+  margin-left: 17px;
+  display: -ms-flexbox;
+  display: flex;
+  height: 30px;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 14px;
+}
+.tichat-chat-action-notice {
+  margin-right: 10px;
+  color: #999;
+}
+.tichat-chat-action-send-btn {
+  text-decoration: none;
+  background-color: #fff;
+  padding: 5px 25px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  color: #666;
+}
+.tichat-show-datetime {
+  text-align: center;
+  line-height: 30px;
+  font-size: 12px;
+  color: #aaa;
+}
+.tichat-msg-item {
+  width: 100%;
+  margin-bottom: 15px;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+.tichat-msg-item-right {
+  float: right;
+  padding-left: 120px;
+}
+.tichat-msg-item-left {
+  float: left;
+  padding-right: 120px;
+}
+.tichat-clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.tichat-nt-item {
+  display: -ms-flexbox;
+  display: flex;
+}
+.tichat-msg-item-right .tichat-nt-item {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.tichat-record-content {
+  max-width: 500px;
+  padding: 10px;
+  background-color: #fff;
+  position: relative;
+}
+.tichat-msg-item-right .tichat-record-content {
+  background-color: #b1e281;
+}
+.tichat-msg-item-left .tichat-record-content:before {
+  content: "";
+  position: absolute;
+  border: 5px solid #fff;
+  top: 15px;
+  left: -5px;
+  transform: rotate(45deg);
+}
+.tichat-msg-item-right .tichat-record-content:before {
+  content: "";
+  position: absolute;
+  border: 5px solid #b1e281;
+  top: 15px;
+  right: -5px;
+  transform: rotate(45deg);
+}
+.tichat-nt-item .tichat-image-avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 3px;
+  background-color: #ddd;
+}
+.tichat-msg-item-right .tichat-nt-item .tichat-image-avatar {
+  margin-left: 10px;
+  margin-right: 0;
+}
+.tichat-group-show-name {
+  font-size: 12px;
+  color: #aaa;
+  padding-bottom: 2px;
+}
+.imchat-emoji-box {
+  position: absolute;
+  bottom: 35px;
+  left: -20px;
+  width: 300px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  overflow-y: auto;
+  text-align: center;
+  padding: 5px;
+  min-height: 200px;
+  box-shadow: 3px 3px 5px rgba(0,0,0,.3);
+}
+.imchat-emoji-box>.em {
+  margin: 3px;
+  cursor: pointer;
+}
+.tichat-nt-item img {
+  max-width: 150px;
+  cursor: pointer;
+}
+.tichat-preview-img {
+  position: absolute;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  border: ;
+  bottom: 0;
+  background-color: rgba(0,0,0,.2);
+  display: none;
+}
+.tichat-preview-img img {
+  max-width: 80%;
+  max-height: 80%;
+}
