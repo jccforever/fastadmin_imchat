@@ -78,6 +78,7 @@
 .tichat-sd-header {
   padding: 18px;
   box-sizing: border-box;
+  display: flex;
 }
 .tichat-user-avatar {
   width: 40px;
@@ -90,7 +91,7 @@
   border-radius: 3px;
 }
 .tichat-user-me-info {
-  margin-left: 50px;
+  margin-left: 10px;
   height: 40px;
   display: -ms-flexbox;
   display: flex;
@@ -106,6 +107,7 @@
   font-size: 13px;
   color: #fff;
   line-height: 20px;
+  width: 190px;
 }
 .tichat-user-name {
   font-size: 18px;
@@ -183,7 +185,7 @@
   list-style: none;
   padding: 0;
   position: absolute;
-  top: 196px;
+  top: 156px;
   right: 0;
   bottom: 0;
   left: 0;
