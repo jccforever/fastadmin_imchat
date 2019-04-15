@@ -80,7 +80,8 @@
   box-sizing: border-box;
 }
 .tichat-user-avatar {
-  float: left;
+  width: 40px;
+  height: 40px;
 }
 .tichat-user-avatar img{
   width: 40px;
@@ -182,7 +183,7 @@
   list-style: none;
   padding: 0;
   position: absolute;
-  top: 156px;
+  top: 196px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -194,6 +195,8 @@
   cursor: pointer;
   overflow: hidden;
   border-bottom: 1px solid #292c33;
+  display: flex;
+  justify-content: space-between;
 }
 .tichat-sd-user-li.tichat-active {
   background: #3a3f45;
@@ -220,8 +223,8 @@
   right: -6px;
 }
 .tichat-user-info {
-  margin-left: 50px;
-  width: 130px;
+  margin-left: 10px;
+  width: 150px;
   height: 40px;
   display: -ms-flexbox;
   display: flex;
@@ -252,10 +255,10 @@
   height: 20px;
 }
 .tichat-li-time {
-  float: right;
   color: #6b6f7c;
   font-size: 13px;
   text-align: right;
+  width: 50px;
 }
 .tichat-tab-hide {
   visibility: hidden;

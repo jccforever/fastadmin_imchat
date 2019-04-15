@@ -52,11 +52,11 @@
                 <img :src="x.avatar">
                 <span class="tichat-msg-show" v-if="rec_reset && x.unread_count>0">{{x.unread_count <= 99 ? x.unread_count : 99 }}</span>
               </div>
-              <div class="tichat-li-time">{{show_format_datetime(x.timestamp)}}</div>
               <div class="tichat-user-info">
                 <div class="nikename">{{x.nickname ? x.nickname : x.username ? x.username : x.name}}</div>
                 <div class="msg" v-truetext="x.last_msg"></div>
               </div>
+              <div class="tichat-li-time">{{show_format_datetime(x.timestamp)}}</div>
             </li>
           </ul>
           <!-- 群组 -->
