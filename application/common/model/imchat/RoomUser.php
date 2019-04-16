@@ -18,7 +18,7 @@ class RoomUser extends Model
     protected $updateTime = null;
     
     /**
-     * 按分组获取所有的用户提供聊天室分配
+     * 按分组获取所有的用户提供聊天室分配 后台分配
      * @param  [type] $ids [description]
      * @return [type]      [description]
      */

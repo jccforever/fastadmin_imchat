@@ -12,7 +12,9 @@ use \think\Validate;
 
 class Index extends Controller
 {
-
+    /**
+     * 限制已登录
+     */
     public function _initialize()
     {
         parent::_initialize();
@@ -25,7 +27,9 @@ class Index extends Controller
             die;
         }
     }
-
+    /**
+     * 首页 用于测试
+     */
     public function index()
     {
         return $this->view->fetch();
@@ -33,7 +37,6 @@ class Index extends Controller
 
     /**
      * 聊天用户列表
-     * @return json
      */
     public function chatList()
     {
@@ -168,7 +171,9 @@ class Index extends Controller
         $ret = Message::getHistoryChatRecord($data, $this->auth->id);
         return $this->json($ret);
     }
-
+    /**
+     * 已读标记
+     */
     public function setRead ()
     {
         $data = input("post.");
@@ -230,7 +235,9 @@ Eof;
             return $this->json(500, $file->getError());
         }
     }
-
+    /**
+     * 文件下载
+     */
     public function download_file() {
         $f = $_REQUEST['name'];
         if (!$f) {

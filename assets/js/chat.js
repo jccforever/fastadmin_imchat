@@ -133,6 +133,7 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
   });
 
+// 表情
 var afeld_emoji= ["em---1","em--1","em-100","em-angry","em-anguished","em-baby","em-blush","em-cold_sweat","em-confounded","em-confused","em-crying_cat_face","em-cry","em-cupid","em-disappointed","em-dizzy_face","em-disappointed_relieved","em-face_with_monocle","em-face_with_raised_eyebrow","em-face_with_rolling_eyes","em-face_vomiting","em-face_with_cowboy_hat","em-expressionless","em-face_with_hand_over_mouth","em-face_with_thermometer","em-face_with_head_bandage","em-fearful","em-frowning","em-full_moon_with_face","em-grimacing","em-grin","em-grinning","em-heart_eyes","em-heart_eyes_cat","em-heart","em-hugging_face","em-hushed","em-innocent","em-joy","em-joy_cat","em-kissing_closed_eyes","em-kissing_heart","em-kissing","em-kissing_smiling_eyes","em-laughing","em-lying_face","em-mask","em-money_mouth_face","em-neutral_face","em-no_mouth","em-open_mouth","em-persevere","em-rage","em-relaxed","em-relieved","em-shushing_face","em-sleeping","em-sleepy","em-slightly_smiling_face","em-slightly_frowning_face","em-smiley","em-smile_cat","em-smirk_cat","em-smirk","em-smile","em-star-struck","em-stuck_out_tongue_closed_eyes","em-stuck_out_tongue_winking_eye","em-sunglasses","em-sweat","em-tired_face","em-thinking_face","em-triumph","em-unamused","em-upside_down_face","em-weary","em-white_frowning_face","em-wink","em-zany_face","em-worried","em-zipper_mouth_face","em-yum"];
 
 
@@ -196,10 +197,12 @@ new Vue({
   computed: {
   },
   methods: {
+    // 更改是否提示
     change_msg_audio () {
       this.msg_audio = !this.msg_audio;
       localStorage.msg_audio = this.msg_audio;
     },
+    // 隐藏其他状态弹出面板
     hide_status_panel() {
       this.show_emoji = false;
       this.show_config_panel = false;
@@ -208,6 +211,7 @@ new Vue({
     insert_emoji (e) {
       this.keyup_ctrl_enter('', e.target.outerHTML);
     },
+    // 文件上传
     upload (e) {
       if (!this.wss) {
         alert('未连接聊天服务器，请刷新后重试');
@@ -248,11 +252,13 @@ new Vue({
           }
         })
     },
+    // 隐藏图片预览
     hide_preview (e) {
       if (e.target == document.querySelector('.tichat-preview-img')) {
         e.target.style.display = 'none';
       }
     },
+    // 是否有更多聊天记录
     is_has_more_record () {
       const {id,type} = this.chat_control.recChat;
       // 先判断是否还有未取出的记录
@@ -263,6 +269,7 @@ new Vue({
       }
       return true;
     },
+    // 获取更多聊天记录
     getMoreRecord () {
       let req = {
         id: this.chat_control.recChat.id,
@@ -294,6 +301,7 @@ new Vue({
         }
       }).catch();
     },
+    // 刷新当前聊天
     _refreshCurrent_chat_record () {
       let k = this.chat_control.recChat.id;
       if (this.chat_control.recChat.type== 'group') {
@@ -359,6 +367,7 @@ new Vue({
           this.sendStatus.send = false;
         })
     },
+    // 附加聊天记录
     _appendChatRecord (data, is_receive=false) {
       let k = is_receive ? data.from_uid : data.to_uid;
       if (data.type == 'group') {
@@ -428,6 +437,7 @@ new Vue({
       }
       this.isHasUnreadMsg = is_has_unread;
     },
+    // 聊天滚动条到底部
     _scrollMoveBottom ()
     {
       setTimeout(()=>{
@@ -526,11 +536,13 @@ new Vue({
         this.chat_control.userChat = obj;
       }
     },
+    // 播放提示声
     play_newmsg_audio () {
       const a = document.createElement("AUDIO");
       a.src="/assets/addons/imchat/new_message.mp3";
       a.play();
     },
+    // 消息输入框获取焦点时
     input_focus () {
       this._self_set_read (this.chat_control.recChat.id, this.chat_control.recChat.type);
     },

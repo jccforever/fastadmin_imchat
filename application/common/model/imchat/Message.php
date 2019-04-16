@@ -131,6 +131,12 @@ class Message extends Model
         return $users[$uid];
     }
 
+    /**
+     * 插入消息
+     * @param  [type] $data 消息内容
+     * @param  [type] $uid  用户id
+     * @return [boolean]      结果
+     */
     public static function insertMsg ($data, $uid)
     {
         extract($data);
@@ -261,25 +267,12 @@ class Message extends Model
         }
         return $ret;
     }
-
     /**
-     * 根据开始的id反序获取聊天记录
-     * @param  integer  $id       对象id
-     * @param  string  $type     群组还是个人 group
-     * @param  string  $begin_id 开始的记录id
-     * @param  integer $size     大小
-     * @return array            记录
+     * 设置已读
+     * @param [type] $uid  用户
+     * @param [type] $id   房间或者用户id
+     * @param [type] $type 类别 普通 或者群组
      */
-    public static function getChatRecordByIdBegin($id, $type="", $begin_id="", $size=20)
-    {
-        if ($type == 'group') {
-            $where['room_id'] = $id;
-
-        } else {
-            $where['from_uid']  = $id;
-        }
-    }
-
     public static function setRead ($uid, $id, $type) {
         if ($type == 'group') {
             // 先查询此群最后一条记录id
@@ -298,6 +291,12 @@ class Message extends Model
         }
     }
 
+    /**
+     * 获取历史记录
+     * @param  [type] $data 比如最后一个id 类别
+     * @param  [type] $uid  用户
+     * @return [array]       记录数组
+     */
     public static function getHistoryChatRecord ($data, $uid) {
         extract($data);
         if ($type == 'group') {

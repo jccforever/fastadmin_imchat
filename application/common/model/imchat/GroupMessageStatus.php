@@ -43,6 +43,12 @@ class GroupMessageStatus extends Model
         return $ret ? $ret['last_message_id'] : 0;
     }
 
+    /**
+     * 更新用户某个群组已读id
+     * @param  [type] $uid     用户id
+     * @param  [type] $room_id 房间
+     * @param  [type] $last_id 已读的最后一条消息
+     */
     public static function refreshUserRead ($uid, $room_id, $last_id)
     {
         // 存储到最后一条已读 先删除 再插入
