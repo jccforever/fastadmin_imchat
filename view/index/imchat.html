@@ -10,7 +10,7 @@
     <div class="ti-logo" :class="{'ti-logo-msg': isHasUnreadMsg}"></div>
     <div>imchat</div>
   </div>
-  <div class="tichat-master" id="tichat_el">
+  <div class="tichat-master" id="tichat_el" @click="hide_status_panel">
     <div class="tichat-preview-img" @click="hide_preview">
       <img src="">
     </div>
@@ -18,6 +18,9 @@
       <div class="tichat-main-inner">
         <!-- left side -->
         <div class="tichat-side">
+          <ul class="tichat-menu-box" v-if="show_config_panel">
+            <li class="tichat-menu-li" :class="{'tichat-audio-open': msg_audio, 'tichat-audio-close': !msg_audio}" @click.stop="change_msg_audio">声音提示</li>
+          </ul>
           <!-- header and menu -->
           <div class="tichat-sd-hd">
             <div class="tichat-sd-header">
@@ -26,7 +29,7 @@
               </div>
               <div class="tichat-user-me-info">
                 <div class="tichat-user-name">{{userInfo.nickname?userInfo.nickname:userInfo.username}}</div>
-                <div class="tichat-menu-tag">
+                <div class="tichat-menu-tag" @click.stop="show_config_panel = true">
                   <span class="iconfont icon-2501caidan"></span>
                 </div>
               </div>
@@ -141,7 +144,7 @@
               <div class="tichat-chat-ft">
                 <ul class="tichat-chat-tool-tab">
                   <li>
-                    <span class="iconfont icon-face" title="点击发送表情" @click="show_emoji=!show_emoji"></span>
+                    <span class="iconfont icon-face" title="点击发送表情" @click.stop="show_emoji=!show_emoji"></span>
                     <div class="imchat-emoji-box" v-if="show_emoji">
                       <i class="em" v-for="(v, k) in emoji" :class="v" :key="v" @click="insert_emoji"></i>
                     </div>

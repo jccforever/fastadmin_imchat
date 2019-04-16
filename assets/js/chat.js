@@ -177,9 +177,12 @@ new Vue({
     scroll_record_control: {}, //滚动条变量存储
     no_record_array: [], //记录没有更多聊天记录标记
     emoji: afeld_emoji, // 表情类名
-    show_emoji: false, // 显示表情
     rec_reset: true, // 用于重新渲染 最近聊天
     isHasUnreadMsg: false, // 是否有未读的消息
+    msg_audio: localStorage.msg_audio != 'false' ? true : false,// 是否开启声音提示
+
+    show_emoji: false, // 显示表情panel
+    show_config_panel: false, //显示设置panel
   },
   watch: {
     // 监听聊天对象改变时赋予不同聊天记录
@@ -193,6 +196,14 @@ new Vue({
   computed: {
   },
   methods: {
+    change_msg_audio () {
+      this.msg_audio = !this.msg_audio;
+      localStorage.msg_audio = this.msg_audio;
+    },
+    hide_status_panel() {
+      this.show_emoji = false;
+      this.show_config_panel = false;
+    },
     // 直接插入输入框未做到 现在只能调用直接发送
     insert_emoji (e) {
       this.keyup_ctrl_enter('', e.target.outerHTML);
@@ -204,6 +215,11 @@ new Vue({
       }
       const file = e.target.files[0];
       if (!file) return;
+      // 这里大小限制了8m 
+      if (file.size > 8*1024*1024) {
+        alert('上次文件不可大于8m');
+        return;
+      }
       const param = new FormData(); //创建form对象
       param.append('file',file);//通过append向form对象添加数据
       param.append('from_uid',this.userInfo.id); 
@@ -216,7 +232,7 @@ new Vue({
       axios.post('upload_file',param,config)
         .then(msg=>{
           if (msg.errno != 0) {
-            alert(msg.msg);
+            alert(msg.msg ? msg.msg : '上次失败');
           } else {
             // 清空
             e.target.value = '';
@@ -510,8 +526,12 @@ new Vue({
         this.chat_control.userChat = obj;
       }
     },
+    play_newmsg_audio () {
+      const a = document.createElement("AUDIO");
+      a.src="/assets/addons/imchat/new_message.mp3";
+      a.play();
+    },
     input_focus () {
-      if (this.show_emoji) this.show_emoji=false;
       this._self_set_read (this.chat_control.recChat.id, this.chat_control.recChat.type);
     },
     /**
@@ -544,6 +564,7 @@ new Vue({
       // 加入聊天记录 然后刷新右边框聊天记录
       this._appendChatRecord(data, true);
       this.isHasUnreadMsg = true;
+      this.msg_audio && this.play_newmsg_audio();
     },
     /**
      * 显示时间戳 当天不显示日期

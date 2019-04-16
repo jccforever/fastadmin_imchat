@@ -191,7 +191,7 @@ class Index extends Controller
     {
         $file = request()->file('file');
         if (!$file) {
-            return $this->json(403, '没有选择文件');
+            return $this->json(403, '没有选择文件或者文件过大');
         }
         // 文件类型是文件还是图片
         $type = in_array($file->getInfo()['type'], ['image/gif', 'image/jpeg', 'image/png']) ? 'image': 'file';

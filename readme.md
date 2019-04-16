@@ -18,4 +18,4 @@
 - 发送消息时提示stream_socket_sendto()，常见于window环境，重启apache等web服务器即可
 
 #### 下载安装
-clone后自行打包zip到fastadmin后台离线安装或者下载后重新打包所需格式zip离线安装即可
+clone后自行打包zip到fastadmin后台离线安装或者下载后离线安装即可

@@ -40,6 +40,7 @@ class Imchat extends Addons
                         'name'    => 'imchat/imchatmessage',
                         'title'   => '内容管理',
                         'icon'    => 'fa fa-comment-o',
+                        'remark' => '群组消息是否已读不存在意义',
                         'sublist' => [
                             ['name' => 'imchat/imchatmessage/index', 'title' => '查看'],
                             ['name' => 'imchat/imchatmessage/del', 'title' => '删除']
