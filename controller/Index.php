@@ -81,7 +81,7 @@ class Index extends Controller
             'avatar'=> $this->auth->avatar,
             'cert'=> $cert,
         ];
-        $ret['socket_addr'] = "ws://localhost:7887";
+        $ret['socket_addr'] = ""; // 此处不填的话 由页面自动提取
         return json($ret);
     }
 

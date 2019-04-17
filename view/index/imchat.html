@@ -18,8 +18,17 @@
       <div class="tichat-main-inner">
         <!-- left side -->
         <div class="tichat-side">
-          <ul class="tichat-menu-box" v-if="show_config_panel">
+          <ul class="tichat-menu-box" v-show="show_config_panel">
             <li class="tichat-menu-li" :class="{'tichat-audio-open': msg_audio, 'tichat-audio-close': !msg_audio}" @click.stop="change_msg_audio">声音提示</li>
+          </ul>
+          <ul class="tichat-search-result-box" v-show="input_search.show_result">
+            <li class="tichat-search-result-li" v-for="(v,k) in input_search.result" :key="k" @click="select_chat_object(v, true)">
+              <div class="tichat-s-name">
+                {{v.name || ''}}{{v.nickname || ''}}
+                <span v-if="v.username">({{v.username}})</span>
+              </div>
+              <div class="tichat-s-notice">点击聊天</div>
+            </li>
           </ul>
           <!-- header and menu -->
           <div class="tichat-sd-hd">
@@ -36,7 +45,7 @@
             </div>
             <div class="tichat-search">
               <span class="iconfont icon-search"></span>
-              <input type="text" placeholder="搜索">
+              <input type="text" placeholder="搜索" v-model="input_search.content">
             </div>
             <!-- 菜单 -->
             <ul class="tichat-sd-tab">

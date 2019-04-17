@@ -184,6 +184,11 @@ new Vue({
 
     show_emoji: false, // 显示表情panel
     show_config_panel: false, //显示设置panel
+    input_search: {
+      content: '', // 搜索内容
+      result: [], // 结果
+      show_result: false, // 结果是否显示
+    }
   },
   watch: {
     // 监听聊天对象改变时赋予不同聊天记录
@@ -192,6 +197,33 @@ new Vue({
         this._refreshCurrent_chat_record ();
       },
       deep: true,
+    },
+    // 人员搜索
+    'input_search.content': {
+      handler(newVal, oldVal) {
+        newVal = newVal.replace(/^\s*/, '').replace(/\s*$/, '');
+        if (!newVal) {
+          this.input_search.show_result = false;
+          this.input_search.result = [];
+          return;
+        }
+        this.input_search.show_result = true;
+        // 先搜索群组 后人员
+        // 只需搜索 username nickname name三个字段
+        let list = [];
+        const reg = new RegExp(newVal, 'i');
+        for (let v of this.groupChat) {
+          if (v.name.search(reg) != -1) {
+            list.push(v);
+          }
+        }
+        for (let v of this.userChat) {
+          if (v.username.search(reg) != -1 || v.nickname.search(reg) != -1) {
+            list.push(v);
+          }
+        }
+        this.input_search.result = list;
+      },
     }
   },
   computed: {
@@ -206,6 +238,7 @@ new Vue({
     hide_status_panel() {
       this.show_emoji = false;
       this.show_config_panel = false;
+      this.input_search.show_result = false;
     },
     // 直接插入输入框未做到 现在只能调用直接发送
     insert_emoji (e) {
@@ -630,7 +663,8 @@ new Vue({
         this.userInfo = msg.user;
         // 连接websocket
         try {
-          const ws = new WebSocket(msg.socket_addr);
+          const socket_addr = msg.socket_addr ? msg.socket_addr : "ws://"+location.host+':7887';
+          const ws = new WebSocket(socket_addr);
           this.wss = true;
           ws.onmessage = this._on_message;
           ws.onclose = event=> {
