@@ -154,9 +154,11 @@
                 <ul class="tichat-chat-tool-tab">
                   <li>
                     <span class="iconfont icon-face" title="点击发送表情" @click.stop="show_emoji=!show_emoji"></span>
-                    <div class="imchat-emoji-box" v-if="show_emoji">
-                      <i class="em" v-for="(v, k) in emoji" :class="v" :key="v" @click="insert_emoji"></i>
-                    </div>
+                    <transition name="fade">
+                      <div class="imchat-emoji-box" v-if="show_emoji">
+                        <i class="em" v-for="(v, k) in emoji" :class="v" :key="v" @click="insert_emoji"></i>
+                      </div>
+                    </transition>
                   </li>
                   <li>
                     <span class="iconfont icon-image"></span>
