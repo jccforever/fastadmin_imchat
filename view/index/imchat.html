@@ -61,7 +61,7 @@
             <!-- 最近聊天的数据会改变  所有不能直接判断 -->
             <li class="tichat-sd-user-li" v-for="(x, y) in recChat" :key="y" :class="{'tichat-active': chat_control && x.id==chat_control.recChat.id && x.type==chat_control.recChat.type }" @click="select_chat_object(x)" :title="x.username ? x.username : x.name">
               <div class="tichat-user-avatar tichat-sd-user-list-avatar">
-                <img :src="x.avatar">
+                <img :src="x.avatar" @error="avatarError"> 
                 <span class="tichat-msg-show" v-if="rec_reset && x.unread_count>0">{{x.unread_count <= 99 ? x.unread_count : 99 }}</span>
               </div>
               <div class="tichat-user-info">
@@ -76,7 +76,7 @@
             <template v-for="x in groupChat">
               <li class="tichat-contact-item" :class="{'tichat-active': x==chat_control.groupChat}"  @click="select_contact_object(x, 'group')"  :title="x.name">
                 <div class="tichat-contact-avatar">
-                  <img :src="x.avatar">
+                  <img :src="x.avatar" @error="avatarError">
                 </div>
                 <div class="nikename">{{x.name}}</div>
               </li>
@@ -88,7 +88,7 @@
               <!-- <li class="tichat-letter">A</li> -->
               <li class="tichat-contact-item" :class="{'tichat-active': x==chat_control.userChat}" @click="select_contact_object(x)"  :title="x.username">
                 <div class="tichat-contact-avatar">
-                  <img :src="x.avatar">
+                  <img :src="x.avatar" @error="avatarError">
                 </div>
                 <div class="nikename">
                   {{x.nickname}}

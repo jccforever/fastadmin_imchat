@@ -229,6 +229,9 @@ new Vue({
   computed: {
   },
   methods: {
+    avatarError(e) {
+      e.target.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAG1BMVEW9vb3h4eHk5OS6urq8vLzV1dXQ0NDe3t7Gxsbyl84HAAAA70lEQVR42u3Uy6oDIRCE4bKqL77/Ex+ZRRomQlrOKmT+lZtPFC8Y/+jBD/5JzNUZLukxZzh5jhmSTKvgKU7IcGVCHmIJr0x5ggkBlcA+ZsiAyhQHGJetDGzj1B0r29iFW/IvwCkc77mS3THbmFM3PPu4zqpW3cN1xcoGW7gWbmUnz14VXTJb0iTn8WcwAloh1rCNi3NkDvKH/m2+OsRkesyJ1ZzhSXYxR0zTyq6u0YzBBqbPywHVNcN0fsB0LIlNy6P4BjNRcueRfMd1n1FtuXOD6xV/0LnHhPAxgVucQiPlFkcHm3yH2cJ48IO/BP8Bcv0OEodij4EAAAAASUVORK5CYII=";
+    },
     // 更改是否提示
     change_msg_audio () {
       this.msg_audio = !this.msg_audio;
